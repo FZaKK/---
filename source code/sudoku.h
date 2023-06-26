@@ -18,7 +18,7 @@ int randEx(){
     LARGE_INTEGER seed;
     QueryPerformanceFrequency(&seed);
     QueryPerformanceCounter(&seed);
-    srand(seed.QuadPart);
+    srand(unsigned int(seed.QuadPart));
 
     return rand();
 }
@@ -39,8 +39,8 @@ public:
 
     void printBoard(vector<vector<char>>& board){
         cout << " |---|---|---|---|---|---|---|---|---| " << endl;
-        for (int i = 0; i < board.size(); i++){
-            for (int j = 0; j < board.size(); j++){
+        for (int i = 0; i < int(board.size()); i++){
+            for (int j = 0; j < int(board.size()); j++){
                 cout << " | " << board[i][j];
             }
             cout << " | " << endl;
@@ -50,8 +50,8 @@ public:
 
     void outputBoard(vector<vector<char>>& board, ofstream& f){
         f << " |---|---|---|---|---|---|---|---|---| " << endl;
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
+        for (int i = 0; i < int(board.size()); i++) {
+            for (int j = 0; j < int(board.size()); j++) {
                 f << " | " << board[i][j];
             }
             f << " | " << endl;
@@ -62,13 +62,13 @@ public:
 
     bool isValid(int row, int col, int num, vector<vector<char>>& board){
         // 检查行有没有重复的，如果有返回false
-        for (int i = 0; i < board.size(); i++){
+        for (int i = 0; i < int(board.size()); i++){
             if (num == board[row][i] - '0'){
                 return false;
             }
         }
         // 检查列有没有重复的，如果有返回false
-        for (int i = 0; i < board.size(); i++)
+        for (int i = 0; i < int(board.size()); i++)
         {
             if (num == board[i][col] - '0')
                 return false;
@@ -119,7 +119,7 @@ public:
         random_device rd;
         mt19937 g(rd());
 
-        while (grids.size() < count) {
+        while (int(grids.size()) < count) {
             vector<vector<char>> temp_sudoku(N, vector<char>(N, '$'));
             solveSudoku_Gen(temp_sudoku);
 
@@ -132,7 +132,7 @@ public:
 
     void swapCol(int m, int n, vector<vector<char>>& board){
         vector<char>temp(board.size(), ' ');
-        for (int i = 0; i < board.size(); i++){
+        for (int i = 0; i < int(board.size()); i++){
             temp[i] = board[i][m];
             board[i][m] = board[i][n];
             board[i][n] = temp[i];
