@@ -1,11 +1,22 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include<Windows.h>
+#include <Windows.h>
 using namespace std;
+
+
+int randEx(){
+    LARGE_INTEGER seed;
+    QueryPerformanceFrequency(&seed);
+    QueryPerformanceCounter(&seed);
+    srand(seed.QuadPart);
+
+    return rand();
+}
 
 
 class sudoku{
@@ -26,6 +37,18 @@ public:
             cout << " | " << endl;
             cout << " |---|---|---|---|---|---|---|---|---| " << endl;
         }
+    }
+
+    void outputBoard(vector<vector<char>>& board, ofstream& f){
+        f << " |---|---|---|---|---|---|---|---|---| " << endl;
+        for (int i = 0; i < board.size(); i++) {
+            for (int j = 0; j < board.size(); j++) {
+                f << " | " << board[i][j];
+            }
+            f << " | " << endl;
+            f << " |---|---|---|---|---|---|---|---|---| " << endl;
+        }
+        f << endl;
     }
 
     bool isValid(int row, int col, int num, vector<vector<char>>& board){
@@ -64,10 +87,10 @@ public:
     }
 
     void selectBlank(int nums, vector<vector<char>>& board){
-        srand(time(NULL));
+        // srand(time(NULL));
         while (nums){
-            int row = rand() % 9;
-            int col = rand() % 9;
+            int row = randEx() % 9;
+            int col = randEx() % 9;
             if (board[row][col] != '$'){
                 board[row][col] = '$';
                 nums--;
@@ -78,10 +101,10 @@ public:
     void create(int blank, vector<vector<char>>& board){
         // 小九宫格中的行和列交换，有以下９种交换方式
         int choice[9][2] = { {0,1},{0,2},{1,2},{3,4},{3,5},{4,5},{6,7},{6,8},{7,8} };
-        srand(time(NULL));
+        // srand(time(NULL));
         // Ｊ代表交换次数，也可以不用这个循环，就交换一次
         for (int j = 0; j < 3; j++){
-            int i = rand() % 9;
+            int i = randEx() % 9;
             board[choice[i][0]].swap(board[choice[i][1]]);   // 随机交换两行
             swapCol(choice[i][0], choice[i][1], board);      // 随机交换两列
         }
