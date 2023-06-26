@@ -21,40 +21,67 @@ int main(int argc, char* argv[]){
     a.parse_check(argc, argv);
 
     // 判断输入的命令，开始测试
-    if (a.get<int>("create") != 0){
+    if (a.get<int>("create") != 0) {
         // 测试生成数独终盘到文件之中
-        create_sudo(a.get<int>("create"));
+        create_sudoku(a.get<int>("create"));
     }
+    // 参数s
     if (a.get<string>("solve") != "") {
-        cout << "solve the sudoku" << endl;
+        solve_sudoku(a.get<string>("solve"));
     }
-    if (a.get<int>("number") != 0) {
+    // 参数n
+    if (a.get<int>("number") != 0 && a.get<int>("manage") == 0 && a.get<int>("range") == 0 && !a.exist("unique")) {
         create_game(a.get<int>("number"));
     }
-    
-
+    // 特殊情况，同时输入了m，n，r，报错
+    if (a.get<int>("number") != 0 && a.get<int>("manage") != 0 && a.get<int>("range") != 0) {
+        cout << "Error : "
+             << "Too many parameters. Have the parameter n, m, r"
+             << endl;
+    }
+    // 参数m
+    if (a.get<int>("manage") != 0) {
+        if (a.get<int>("number") != 0) {
+            create_game(a.get<int>("number"), a.get<int>("manage"));
+        }
+        else {
+            cout << "Error : "
+                 << "Have the parameter m, but don't have the parameter n!!!"
+                 << endl;
+        }
+    }
+    // 参数r
+    if (a.get<int>("range") != 0) {
+        if (a.get<int>("number") != 0) {
+            create_game_range(a.get<int>("number"), a.get<int>("range"));
+        }
+        else {
+            cout << "Error : "
+                 << "Have the parameter r, but don't have the parameter n!!!"
+                 << endl;
+        }
+    }
+    // 参数u
+    if (a.exist("unique")) {
+        if (a.get<int>("number") != 0) {
+            create_game_unique(a.get<int>("number"));
+        }
+        else {
+            cout << "Error : "
+                 << "Have the parameter u, but don't have the parameter n!!!"
+                 << endl;
+        }
+    }
     // 没有参数的时候会给出数独的example
     if (argc == 1) {
         cout << " ----- Show the sudoku example ----- " << endl;
-        vector<vector<char>>board = { vector<char>{'5','3','$','$','7','$','$','$','$'},
-                                  vector<char>{'6','$','$','1','9','5','$','$','$'},
-                                  vector<char>{'$','9','8','$','$','$','$','6','$'},
-                                  vector<char>{'8','$','$','$','6','$','$','$','3'},
-                                  vector<char>{'4','$','$','8','$','3','$','$','1'},
-                                  vector<char>{'7','$','$','$','2','$','$','$','6'},
-                                  vector<char>{'$','6','$','$','$','$','2','8','$'},
-                                  vector<char>{'$','$','$','4','1','9','$','$','5'},
-                                  vector<char>{'$','$','$','$','8','$','$','7','9'}, };
-        sudoku temp(board);
-        temp.dfs(board, 0);
-        temp.printBoard(board);
 
         // 创建一个9*9的空二维数组
         vector<vector<char>>blank(9, vector<char>(9, '$'));
         sudoku s(blank);
         s.create(50, blank);  // 创建50个空格的数独
         if (s.active){
-            cout << endl << " ----- The gen of the sudoku ----- " << endl;
+            cout << endl << " ----- The Gen of the sudoku ----- " << endl;
             s.printBoard(blank);
         }
         else{
@@ -72,5 +99,6 @@ int main(int argc, char* argv[]){
         }
     }
 
+    system("pause");
     return 0;
 }
