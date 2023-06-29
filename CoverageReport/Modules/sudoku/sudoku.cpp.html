@@ -34,81 +34,63 @@ using namespace std;
     // ÅÐ¶ÏÊäÈëµÄÃüÁî£¬¿ªÊ¼²âÊÔ
 <span style = "background-color:#dfd">    if (a.get&lt;int&gt;("create") != 0) {</span>
         // ²âÊÔÉú³ÉÊý¶ÀÖÕÅÌµ½ÎÄ¼þÖ®ÖÐ
-<span style = "background-color:#fdd">        create_sudoku(a.get&lt;int&gt;("create"));</span>
+<span style = "background-color:#dfd">        create_sudoku(a.get&lt;int&gt;("create"));</span>
     }
     // ²ÎÊýs
-<span style = "background-color:#dfd">    if (a.get&lt;string&gt;("solve") != "") {</span>
-<span style = "background-color:#fdd">        solve_sudoku(a.get&lt;string&gt;("solve"));</span>
+<span style = "background-color:#dfd">    if (a.get&lt;string&gt;("solve") != "") {
+        if (fileExists(a.get&lt;string&gt;("solve"))) {
+            solve_sudoku(a.get&lt;string&gt;("solve"));</span>
+        }
     }
     // ²ÎÊýn
 <span style = "background-color:#dfd">    if (a.get&lt;int&gt;("number") != 0 &amp;&amp; a.get&lt;int&gt;("manage") == 0 &amp;&amp; a.get&lt;int&gt;("range") == 0 &amp;&amp; !a.exist("unique")) {</span>
 <span style = "background-color:#fdd">        create_game(a.get&lt;int&gt;("number"));</span>
     }
     // ÌØÊâÇé¿ö£¬Í¬Ê±ÊäÈëÁËm£¬n£¬r£¬±¨´í
-<span style = "background-color:#dfd">    if (a.get&lt;int&gt;("number") != 0 &amp;&amp; a.get&lt;int&gt;("manage") != 0 &amp;&amp; a.get&lt;int&gt;("range") != 0) {</span>
-<span style = "background-color:#fdd">        cout &lt;&lt; "Error : "</span>
-             &lt;&lt; "Too many parameters. Have the parameter n, m, r"
+<span style = "background-color:#dfd">    if (a.get&lt;int&gt;("number") != 0 &amp;&amp; a.get&lt;int&gt;("manage") != 0 &amp;&amp; a.get&lt;int&gt;("range") != 0) {
+        cout &lt;&lt; "Error : "</span>
+             &lt;&lt; "Too many parameters. Have the parameter n, m, r!!!"
              &lt;&lt; endl;
     }
     // ²ÎÊým
-<span style = "background-color:#dfd">    if (a.get&lt;int&gt;("manage") != 0) {</span>
-<span style = "background-color:#fdd">        if (a.get&lt;int&gt;("number") != 0) {
-            create_game(a.get&lt;int&gt;("number"), a.get&lt;int&gt;("manage"));
-        }</span>
-        else {
-<span style = "background-color:#fdd">            cout &lt;&lt; "Error : "</span>
-                 &lt;&lt; "Have the parameter m, but don't have the parameter n!!!"
-                 &lt;&lt; endl;
+<span style = "background-color:#dfd">    if (a.get&lt;int&gt;("manage") != 0) {
+        if (a.get&lt;int&gt;("number") != 0) {
+            create_game(a.get&lt;int&gt;("number"), a.get&lt;int&gt;("manage"));</span>
         }
     }
     // ²ÎÊýr
 <span style = "background-color:#dfd">    if (a.get&lt;int&gt;("range") != 0) {
         if (a.get&lt;int&gt;("number") != 0) {
-            create_game_range(a.get&lt;int&gt;("number"), a.get&lt;int&gt;("range"));
-        }</span>
-        else {
-<span style = "background-color:#fdd">            cout &lt;&lt; "Error : "</span>
-                 &lt;&lt; "Have the parameter r, but don't have the parameter n!!!"
-                 &lt;&lt; endl;
+            create_game_range(a.get&lt;int&gt;("number"), a.get&lt;int&gt;("range"));</span>
         }
     }
     // ²ÎÊýu
 <span style = "background-color:#dfd">    if (a.exist("unique")) {
         if (a.get&lt;int&gt;("number") != 0) {
-            create_game_unique(a.get&lt;int&gt;("number"));
-        }</span>
-        else {
-<span style = "background-color:#fdd">            cout &lt;&lt; "Error : "</span>
-                 &lt;&lt; "Have the parameter u, but don't have the parameter n!!!"
-                 &lt;&lt; endl;
+            create_game_unique(a.get&lt;int&gt;("number"));</span>
         }
     }
     // Ã»ÓÐ²ÎÊýµÄÊ±ºò»á¸ø³öÊý¶ÀµÄexample
-<span style = "background-color:#dfd">    if (argc == 1) {</span>
-<span style = "background-color:#fdd">        cout &lt;&lt; " ----- Show the sudoku example ----- " &lt;&lt; endl;</span>
+<span style = "background-color:#dfd">    if (argc != 1) {
+        cout &lt;&lt; " ----- Show the sudoku example ----- " &lt;&lt; endl;</span>
 
         // ´´½¨Ò»¸ö9*9µÄ¿Õ¶þÎ¬Êý×é
-<span style = "background-color:#fdd">        vector&lt;vector&lt;char&gt;&gt;blank(9, vector&lt;char&gt;(9, '$'));
+<span style = "background-color:#dfd">        vector&lt;vector&lt;char&gt;&gt;blank(9, vector&lt;char&gt;(9, '$'));
         sudoku s(blank);
         s.create(50, blank);  // ´´½¨50¸ö¿Õ¸ñµÄÊý¶À
         if (s.active){
             cout &lt;&lt; endl &lt;&lt; " ----- The Gen of the sudoku ----- " &lt;&lt; endl;
-            s.printBoard(blank);
-        }</span>
-        else{
-<span style = "background-color:#fdd">            cout &lt;&lt; endl &lt;&lt; " ----- The sudoku is invalid -----" &lt;&lt; endl;</span>
+            s.printBoard(blank);</span>
         }
 
         // ½âÊý¶Àº¯Êý
-<span style = "background-color:#fdd">        s.dfs(blank, 0);
+<span style = "background-color:#dfd">        s.dfs(blank, 0);
         if (s.active){
             cout &lt;&lt; endl &lt;&lt;  " ----- The solution of the sudoku ----- " &lt;&lt; endl;
-            s.printBoard(blank);
-        }</span>
-        else{
-<span style = "background-color:#fdd">            cout &lt;&lt; endl &lt;&lt; " ----- The sudoku is invalid -----" &lt;&lt; endl;</span>
+            s.printBoard(blank);</span>
         }
-<span style = "background-color:#fdd">    }</span>
+<span style = "background-color:#dfd">    }</span>
+
 
     // ²âÊÔÑùÀý1
 <span style = "background-color:#dfd">    cout &lt;&lt; " ----- Show the sudoku example ----- " &lt;&lt; endl;</span>
@@ -119,20 +101,14 @@ using namespace std;
     s.create(50, blank);  // ´´½¨50¸ö¿Õ¸ñµÄÊý¶À
     if (s.active) {
         cout &lt;&lt; endl &lt;&lt; " ----- The Gen of the sudoku ----- " &lt;&lt; endl;
-        s.printBoard(blank);
-    }</span>
-    else {
-<span style = "background-color:#fdd">        cout &lt;&lt; endl &lt;&lt; " ----- The sudoku is invalid -----" &lt;&lt; endl;</span>
+        s.printBoard(blank);</span>
     }
 
     // ½âÊý¶Àº¯Êý
 <span style = "background-color:#dfd">    s.dfs(blank, 0);
     if (s.active) {
         cout &lt;&lt; endl &lt;&lt; " ----- The solution of the sudoku ----- " &lt;&lt; endl;
-        s.printBoard(blank);
-    }</span>
-    else {
-<span style = "background-color:#fdd">        cout &lt;&lt; endl &lt;&lt; " ----- The sudoku is invalid -----" &lt;&lt; endl;</span>
+        s.printBoard(blank);</span>
     }
 
     // ²âÊÔÑùÀý2

@@ -27,6 +27,12 @@ using namespace std;
 <span style = "background-color:#dfd">string output_path = "sudoku.txt";</span>
 
 
+// ÅÐ¶ÏÎÄ¼þÊÇ·ñ´æÔÚÓÚ¹¤×÷Ä¿Â¼
+<span style = "background-color:#dfd">bool fileExists(const string&amp; fileName) {
+    ifstream file(fileName);
+    return file.good();  // ¼ì²éÎÄ¼þÊÇ·ñ³É¹¦´ò¿ª
+}</span>
+
 // ¶ÔÓ¦c²ÎÊý£¬Éú³ÉsudoÖÕ¾ÖÎÄ¼þ
 <span style = "background-color:#dfd">void create_sudoku(int num){</span>
     // ÏÈ½«Ôø¾­Éú³ÉµÄÄÚÈÝÇå¿Õ
