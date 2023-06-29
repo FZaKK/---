@@ -16,6 +16,12 @@ map<int, int> diff_map = {
 string output_path = "sudoku.txt";
 
 
+// 判断文件是否存在于工作目录
+bool fileExists(const string& fileName) {
+    ifstream file(fileName);
+    return file.good();  // 检查文件是否成功打开
+}
+
 // 对应c参数，生成sudo终局文件
 void create_sudoku(int num){
     // 先将曾经生成的内容清空

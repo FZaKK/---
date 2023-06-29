@@ -27,7 +27,14 @@ int main(int argc, char* argv[]){
     }
     // 参数s
     if (a.get<string>("solve") != "") {
-        solve_sudoku(a.get<string>("solve"));
+        if (fileExists(a.get<string>("solve"))) {
+            solve_sudoku(a.get<string>("solve"));
+        }
+        else {
+            cout << "Error : "
+                 << "The game file does not exist in the current directory!!!"
+                 << endl;
+        }
     }
     // 参数n
     if (a.get<int>("number") != 0 && a.get<int>("manage") == 0 && a.get<int>("range") == 0 && !a.exist("unique")) {
@@ -36,7 +43,7 @@ int main(int argc, char* argv[]){
     // 特殊情况，同时输入了m，n，r，报错
     if (a.get<int>("number") != 0 && a.get<int>("manage") != 0 && a.get<int>("range") != 0) {
         cout << "Error : "
-             << "Too many parameters. Have the parameter n, m, r"
+             << "Too many parameters. Have the parameter n, m, r!!!"
              << endl;
     }
     // 参数m
@@ -98,6 +105,62 @@ int main(int argc, char* argv[]){
             cout << endl << " ----- The sudoku is invalid -----" << endl;
         }
     }
+
+    /* just for test
+
+    // 测试样例1
+    cout << " ----- Show the sudoku example ----- " << endl;
+
+    // 创建一个9*9的空二维数组
+    vector<vector<char>>blank(9, vector<char>(9, '$'));
+    sudoku s(blank);
+    s.create(50, blank);  // 创建50个空格的数独
+    if (s.active) {
+        cout << endl << " ----- The Gen of the sudoku ----- " << endl;
+        s.printBoard(blank);
+    }
+    else {
+        cout << endl << " ----- The sudoku is invalid -----" << endl;
+    }
+
+    // 解数独函数
+    s.dfs(blank, 0);
+    if (s.active) {
+        cout << endl << " ----- The solution of the sudoku ----- " << endl;
+        s.printBoard(blank);
+    }
+    else {
+        cout << endl << " ----- The sudoku is invalid -----" << endl;
+    }
+
+    // 测试样例2
+    create_sudoku(10);
+
+    // 测试样例3
+    create_sudoku(100);
+
+    // 测试样例4
+    solve_sudoku("game.txt");
+
+    // 测试样例5
+    create_game(10);
+
+    // 测试样例6
+    create_game(100);
+
+    // 测试样例7
+    create_game(5, 1);
+
+    // 测试样例8
+    create_game(5, 3);
+
+    // 测试样例9
+    create_game_range(5, 20);
+
+    // 测试样例10
+    create_game_range(5, 50);
+
+    */
 
     system("pause");
     return 0;
